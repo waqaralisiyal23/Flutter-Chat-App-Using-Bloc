@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chatapp/enums/snackbar_message.dart';
 import 'package:chatapp/res/res_exports.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +26,14 @@ void showSnackbar(SnackbarMessage messageType, String msg,
             : AppColors.warninngColor,
     colorText: textolor,
   );
+}
+
+void scrollToBottom(ScrollController scrollController) {
+  Timer(const Duration(milliseconds: 300), () {
+    if (scrollController.hasClients) {
+      scrollController.jumpTo(scrollController.position.maxScrollExtent);
+    }
+  });
 }
 
 void showImageOptionBox({

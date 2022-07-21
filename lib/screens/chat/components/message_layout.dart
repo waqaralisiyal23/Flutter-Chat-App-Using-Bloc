@@ -1,5 +1,4 @@
 import 'package:chatapp/enums/message_type.dart';
-import 'package:chatapp/helpers/utils.dart';
 import 'package:chatapp/models/message.dart';
 import 'package:chatapp/res/res_exports.dart';
 import 'package:chatapp/screens/chat/components/text_message.dart';
@@ -40,15 +39,16 @@ class MessageLayout extends StatelessWidget {
   }
 
   Widget messageContent() {
-    final MessageType messageType = Utils.getMessageType(message.type);
-    switch (messageType) {
+    switch (message.messageType) {
       case MessageType.text:
         return TextMessage(message: message);
       case MessageType.image:
         return const SizedBox(width: 0, height: 0);
-      case MessageType.file:
-        return const SizedBox(width: 0, height: 0);
       case MessageType.audio:
+        return const SizedBox(width: 0, height: 0);
+      case MessageType.video:
+        return const SizedBox(width: 0, height: 0);
+      case MessageType.gif:
         return const SizedBox(width: 0, height: 0);
     }
   }

@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart' show immutable;
 
+@immutable
 abstract class AuthService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 

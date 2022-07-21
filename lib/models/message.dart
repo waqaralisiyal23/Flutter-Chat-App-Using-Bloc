@@ -1,10 +1,11 @@
+import 'package:chatapp/enums/message_type.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Message {
   final String messageId;
   final String senderId;
   final String receiverId;
-  final String type;
+  final MessageType messageType;
   final String message;
   final Timestamp timestamp;
   final bool? isSender;
@@ -13,7 +14,7 @@ class Message {
     required this.messageId,
     required this.senderId,
     required this.receiverId,
-    required this.type,
+    required this.messageType,
     required this.message,
     required this.timestamp,
     this.isSender,
@@ -24,7 +25,7 @@ class Message {
       'messageId': messageId,
       'senderId': senderId,
       'receiverId': receiverId,
-      'type': type,
+      'messageType': messageType.type,
       'message': message,
       'timestamp': timestamp,
     };
@@ -35,7 +36,7 @@ class Message {
       messageId: map['messageId'] as String,
       senderId: map['senderId'] as String,
       receiverId: map['receiverId'] as String,
-      type: map['type'] as String,
+      messageType: (map['messageType'] as String).toMessageType(),
       message: map['message'] as String,
       timestamp: map['timestamp'] as Timestamp,
     );
@@ -45,7 +46,7 @@ class Message {
     String? messageId,
     String? senderId,
     String? receiverId,
-    String? type,
+    MessageType? messageType,
     String? message,
     Timestamp? timestamp,
     bool? isSender,
@@ -54,95 +55,10 @@ class Message {
       messageId: messageId ?? this.messageId,
       senderId: senderId ?? this.senderId,
       receiverId: receiverId ?? this.receiverId,
-      type: type ?? this.type,
+      messageType: messageType ?? this.messageType,
       message: message ?? this.message,
       timestamp: timestamp ?? this.timestamp,
       isSender: isSender ?? this.isSender,
     );
   }
 }
-
-List<Message> demeChatMessages = [
-  Message(
-    messageId: '1',
-    senderId: 'W',
-    receiverId: 'A',
-    type: 'text',
-    message: 'Hello',
-    timestamp: Timestamp.now(),
-  ),
-  Message(
-    messageId: '2',
-    senderId: 'A',
-    receiverId: 'W',
-    type: 'text',
-    message: 'Hello',
-    timestamp: Timestamp.now(),
-  ),
-  Message(
-    messageId: '3',
-    senderId: 'W',
-    receiverId: 'A',
-    type: 'text',
-    message: 'Hello',
-    timestamp: Timestamp.now(),
-  ),
-  Message(
-    messageId: '4',
-    senderId: 'W',
-    receiverId: 'A',
-    type: 'text',
-    message: 'Hello',
-    timestamp: Timestamp.now(),
-  ),
-  Message(
-    messageId: '5',
-    senderId: 'A',
-    receiverId: 'W',
-    type: 'text',
-    message: 'Hello',
-    timestamp: Timestamp.now(),
-  ),
-  Message(
-    messageId: '6',
-    senderId: 'W',
-    receiverId: 'A',
-    type: 'text',
-    message: 'Hello',
-    timestamp: Timestamp.now(),
-  ),
-  Message(
-    messageId: '7',
-    senderId: 'A',
-    receiverId: 'W',
-    type: 'text',
-    message: 'Hello',
-    timestamp: Timestamp.now(),
-  ),
-  Message(
-    messageId: '8',
-    senderId: 'A',
-    receiverId: 'W',
-    type: 'text',
-    message: 'h',
-    timestamp: Timestamp.now(),
-  ),
-  Message(
-    messageId: '9',
-    senderId: 'A',
-    receiverId: 'W',
-    type: 'text',
-    message:
-        'Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello',
-    timestamp: Timestamp.now(),
-  ),
-  Message(
-    messageId: '10',
-    senderId: 'W',
-    receiverId: 'A',
-    type: 'text',
-    message:
-        'Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello Hello',
-    timestamp: Timestamp.now(),
-  ),
-];

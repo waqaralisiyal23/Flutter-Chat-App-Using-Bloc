@@ -19,6 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<SelectRouteEvent>(_onSelectRouteEvent);
     on<SignInEvent>(_onSignInEvent);
     on<SignUpEvent>(_onSignUpEvent);
+    on<RefreshCurrentUserEvent>(_onRefreshCurrentUserEvent);
     on<LogOutEvent>(_onLogOutEvent);
   }
 
@@ -148,13 +149,30 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
   }
 
+  void _onRefreshCurrentUserEvent(
+      RefreshCurrentUserEvent event, Emitter<AuthState> emit) async {
+    emit(
+      AuthState(
+        currentUser: event.userModel,
+        signinLoading: false,
+        signupLoading: false,
+      ),
+    );
+  }
+
   void _onLogOutEvent(LogOutEvent event, Emitter<AuthState> emit) async {
     try {
+      await UserService.updateProifle(
+        uid: state.currentUser!.uid,
+        dataToUpdate: {'status': false},
+      );
       await FirebaseAuth.instance.signOut();
       await LocalStorage.removeCurrentUser();
       emit(const AuthState.defaultState());
       Get.offAllNamed(SignupOrSigninScreen.name);
     } on FirebaseAuthException catch (e) {
+      showSnackbar(SnackbarMessage.error, e.message ?? e.toString());
+    } on FirebaseException catch (e) {
       showSnackbar(SnackbarMessage.error, e.message ?? e.toString());
     } catch (e) {
       showSnackbar(SnackbarMessage.error, e.toString());

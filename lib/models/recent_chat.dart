@@ -1,40 +1,37 @@
+import 'package:chatapp/enums/message_type.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RecentChat {
-  final String messageId;
-  final String senderId;
-  final String receiverId;
-  final String type;
+  final String chatUserId;
+  final String messageSenderId;
   final String message;
+  final MessageType messageType;
   final Timestamp timestamp;
 
   RecentChat({
-    required this.messageId,
-    required this.senderId,
-    required this.receiverId,
-    required this.type,
+    required this.chatUserId,
+    required this.messageSenderId,
     required this.message,
+    required this.messageType,
     required this.timestamp,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'messageId': messageId,
-      'senderId': senderId,
-      'receiverId': receiverId,
-      'type': type,
+      'chatUserId': chatUserId,
+      'messageSenderId': messageSenderId,
       'message': message,
+      'messageType': messageType.type,
       'timestamp': timestamp,
     };
   }
 
   factory RecentChat.fromMap(Map<String, dynamic> map) {
     return RecentChat(
-      messageId: map['messageId'] as String,
-      senderId: map['senderId'] as String,
-      receiverId: map['receiverId'] as String,
-      type: map['type'] as String,
+      chatUserId: map['chatUserId'] as String,
+      messageSenderId: map['messageSenderId'] as String,
       message: map['message'] as String,
+      messageType: (map['messageType'] as String).toMessageType(),
       timestamp: map['timestamp'] as Timestamp,
     );
   }

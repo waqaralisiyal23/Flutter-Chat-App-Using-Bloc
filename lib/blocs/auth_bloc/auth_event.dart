@@ -31,3 +31,9 @@ class SignUpEvent implements AuthEvent {
 
 @immutable
 class LogOutEvent implements AuthEvent {}
+
+@immutable
+class RefreshCurrentUserEvent implements AuthEvent {
+  final UserModel userModel;
+  const RefreshCurrentUserEvent({required this.userModel});
+}
